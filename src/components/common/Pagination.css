@@ -1,0 +1,29 @@
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination .page-num {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.pagination .page-num.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination .page-num:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination .ellipsis {
+    display: inline-block;
+    margin: 0 5px;
+}

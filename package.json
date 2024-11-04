@@ -1,0 +1,57 @@
+{
+  "name": "atos-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fullpage/react-fullpage": "^0.1.45",
+    "@hookform/resolvers": "^3.9.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "jwt-decode": "^4.0.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.0",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.27.0",
+    "react-scripts": "^5.0.1",
+    "styled-components": "^6.1.13",
+    "swiper": "^11.1.14",
+    "web-vitals": "^2.1.4d",
+    "yup": "^1.4.0",
+    "zod": "^3.23.8"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "react-app-rewired": "^2.2.1",
+    "webpack": "^5.95.0",
+    "webpack-dev-server": "^5.1.0"
+  }
+}
