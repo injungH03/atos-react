@@ -55,7 +55,7 @@ const LoginForm = () => {
                                     type="text"
                                     {...register('id')}
                                     className="c2 enterArea"
-                                    maxLength="20"
+                                    maxLength="30"
                                     placeholder="아이디를 입력해 주세요."
                                 />
                                 {errors.id && <span className="error-message">{errors.id.message}</span>}

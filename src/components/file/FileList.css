@@ -1,0 +1,15 @@
+.existing-files {
+    margin-top: 10px;
+  }
+ 
+  .file-download-button {
+    padding: 10px 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .file-download-button:hover {
+    background-color: #f0f0f0;
+    text-decoration: none;
+  }

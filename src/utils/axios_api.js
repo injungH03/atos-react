@@ -32,12 +32,14 @@ axios_api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
+const LOGIN_URL = '/login';
+
 // 응답 인터셉터: 401 에러 발생 시 로그아웃 및 리디렉션 처리
 axios_api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response) {
-            const { status, data } = error.response;
+            const { status, data, config } = error.response;
 
             if (process.env.NODE_ENV === 'development') {
                 console.error('API 에러 발생:', data);
@@ -66,12 +68,18 @@ axios_api.interceptors.response.use(
                 }
             }
 
+            const isLoginEndpoint = config.url === LOGIN_URL;
+
             if (status === 401) {
-                logoutCallback(); // 로그아웃 콜백 호출
-                alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
-                window.location.href = '/main'; // 로그인 페이지로 리디렉션
-            } else {
-                alert(error.message);
+                if (isLoginEndpoint) {
+                    const loginErrorMessage = data.error || '아이디나 비밀번호가 틀렸습니다.';
+                    alert(loginErrorMessage);
+                } else {
+                    // Handle other 401 errors
+                    logoutCallback(); // 로그아웃 콜백 호출
+                    alert('세션 또는 인증 오류. 로그인 해주세요.');
+                    window.location.href = '/main'; // 로그인 페이지로 리디렉션
+                }
             }
         } else if (error.request) {
             // 서버가 응답하지 않았을 때

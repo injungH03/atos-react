@@ -8,5 +8,7 @@ export { default as Layout } from './common/Layout';
 export { default as Pagination } from './common/Pagination';
 export { default as HeaderNavi } from './common/HeaderNavi';
 export { default as ScrollTop } from './common/ScrollTop';
+export { default as KakaoMap } from './api/KakaoMap';
+export { default as FileList } from './file/FileList';
 export { default as LeftMenu } from './lecture/LeftMenu';
 export { default as SearchBox } from './lecture/SearchBox';

@@ -36,18 +36,7 @@ const LectureDetail = () => {
 
     const { data, isLoading, isError, error } = useQuery(
         ['lectureDetail', lectureCode],
-        () => fetchLectureDetail(lectureCode),
-		{
-			onError: (error) => {
-				const status = error?.response?.status;
-				if (status === 400) {
-					alert(error.response.data.message);
-					navigate(-1); 
-				} else {
-					alert('예상치 못한 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-				}
-			},
-		}
+        () => fetchLectureDetail(lectureCode)
     );
 
     const mainCode = searchParams.get('mainCode');
@@ -101,6 +90,7 @@ const LectureDetail = () => {
             memberId: auth.userId,
             lectureId: parseInt(lectureCode, 10), // 10진수 처리
             amount: parseFloat(100, 10),
+			lectureDate:lectureData.lectureDate,
         };
 
         post('/lectureApply', requestData)
@@ -241,7 +231,7 @@ const LectureDetail = () => {
                                         교육생 인원이 10명 미만일 경우 자동으로 페강 처리 되며 교육일자 변경 또는 환불 됩니다 
                                         <div className="box-border">
                                             <span className="txt-red">유의사항</span>
-                                            <b className="txt-point-img"><img src="/img/btn_point.png" alt="포인트" />환불조건</b> 신청후 <b className="txt-blue">3일 유예기간</b> 까지 교육비 <b className="txt-blue">미결제 상태인 경우 신청</b> 취소 처리되며 <b className="txt-blue">신청 마감일 이후로부터~교육 당일 출석확인 전까지는 교육비
+                                            <b className="txt-point-img"><img src="/img/btn_point.png" alt="포인트" />환불조건</b> 신청 마감일까지 교육비 <b className="txt-blue">미결제 상태인 경우 신청</b> 취소 처리되며 <b className="txt-blue">신청 마감일 이후로부터~교육 당일 출석확인 전까지는 교육비
                                             환불 불가</b>
                                         </div>
 										<div className="text-cent">
@@ -254,13 +244,13 @@ const LectureDetail = () => {
 																{statusData.paymentStatus === Globals.status.payment.pending && (
 																	<>
 																		<button className="btn btn_red mt30" onClick={handlePayment}>결제하기</button>
-																		<button className="btn btn-blue mt30 ml10" onClick={handleCancel}>신청 취소</button>
+																		<button className="btn btn-blue mt30 ml10" onClick={handleCancel}>교육 취소</button>
 																		<button className="btn btn-blue mt30 ml10" onClick={handleLectureList}>목록으로</button>
 																	</>
 																)}
 																{statusData.paymentStatus === Globals.status.payment.complete && (
 																	<>
-																		<button className="btn btn-blue mt30 ml10" onClick={handleCancel}>신청 취소 및 환불</button>
+																		<button className="btn btn-blue mt30 ml10" onClick={handleCancel}>교육 취소 및 환불</button>
 																		<button className="btn btn-blue mt30 ml10" onClick={handleLectureList}>목록으로</button>
 																	</>
 																)}
@@ -268,7 +258,7 @@ const LectureDetail = () => {
 																{!statusData.paymentStatus && (
 																	<>
 																		<button className="btn btn_red mt30" onClick={handlePayment}>결제하기</button>
-																		<button className="btn btn-blue mt30 ml10" onClick={handleCancel}>신청 취소</button>
+																		<button className="btn btn-blue mt30 ml10" onClick={handleCancel}>교육 취소</button>
 																		<button className="btn btn-blue mt30 ml10" onClick={handleLectureList}>목록으로</button>
 																	</>
 																)}

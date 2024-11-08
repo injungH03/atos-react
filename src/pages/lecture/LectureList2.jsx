@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Footer, HeaderNavi, LeftMenu, SearchBox, Pagination} from '@components';
 import { useNavigate, useSearchParams, useLocation  } from 'react-router-dom';
 import { useQuery } from 'react-query';
@@ -11,12 +11,14 @@ const categoryLabels = {
 };
 
 
-const fetchLectures = async (params) => {
+const fetchLectures = async ({ queryKey: [, params] }) => {
+    const { mainCode, subCode, searchWrd, pageIndex, recordCountPerPage, lectureMethod } = params;
     const response = await get('/lectureList', {
-      params: params,
+        params: { mainCode, subCode, searchWrd, pageIndex, recordCountPerPage, lectureMethod },
     });
+    // console.log('데이터 확인 = ', response);
     return response;
-  };
+};
 
 
 const LectureList = () => {
@@ -33,38 +35,22 @@ const LectureList = () => {
     const location = useLocation();
     const now = new Date();
 
-    const queryParameters = {
-        mainCode,
-        subCode,
-        searchWrd,
-        pageIndex,
-        recordCountPerPage: itemsPerPage,
-        lectureMethod,
-      };
-
     const { data, isLoading, isError, error } = useQuery(
         ['selectLectureList', mainCode, subCode, searchWrd, pageIndex, itemsPerPage, lectureMethod],
-        () => fetchLectures(queryParameters),
+        () => fetchLectures({ mainCode, subCode, searchWrd, pageIndex, recordCountPerPage: itemsPerPage, lectureMethod }),
         {
           keepPreviousData: true,
           staleTime: 5 * 60 * 1000,
         }
       );
 
-      const handlePageChange = (pageNumber) => {
-        const params = new URLSearchParams(searchParams);
-        params.set('pageIndex', pageNumber);
-        setSearchParams(params);
-      };
+    const handlePageChange = (pageNumber) => {
+        setSearchParams({ mainCode, subCode, searchWrd, pageIndex: pageNumber, lectureMethod });
+    };
 
-      const handleSearch = (newCriteria) => {
-        const params = new URLSearchParams(searchParams);
-        params.set('mainCode', newCriteria.mainCode || '');
-        params.set('subCode', newCriteria.subCode || '');
-        params.set('searchWrd', newCriteria.searchWrd || '');
-        params.set('pageIndex', '1');
-        setSearchParams(params);
-      };
+    const handleSearch = (newCriteria) => {
+        setSearchParams({ ...newCriteria, pageIndex: 1, lectureMethod });
+    };
 
     const isAvailableForEnrollment = (item) => {
         const recEndDate = new Date(item.recEndDate);

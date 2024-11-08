@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import {MainPage, SignupPage, Main, LectureList, LectureDetail, NotFound} from '@pages';
+import {MainPage, SignupPage, Main, LectureList, LectureDetail, Resources, NotFound} from '@pages';
 import {ProtectedRoute, Layout, MainLayout} from '@components';
 import { HeaderProvider } from '@context/HeaderContext';
 
@@ -48,15 +48,18 @@ function AppRoutes() {
                     // </ProtectedRoute>
                 } 
             />
-                
-            <Route 
-                path="/admin/member/boardList" 
+
+            <Route path="/support/resources" 
                 element={
-                    <ProtectedRoute roles={['ROLE_ADMIN']}>
-                        {/* <AdminDashboard /> */}
-                    </ProtectedRoute>
+                    // <ProtectedRoute roles={['ROLE_ADMIN', 'ROLE_USER']}>
+                        <Layout>
+                            <Resources />
+                        </Layout>
+                    // </ProtectedRoute>
                 } 
             />
+                
+
 
             <Route path="*" element={<NotFound />} />
 
