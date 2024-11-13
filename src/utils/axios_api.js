@@ -78,7 +78,10 @@ axios_api.interceptors.response.use(
                     // Handle other 401 errors
                     logoutCallback(); // 로그아웃 콜백 호출
                     alert('세션 또는 인증 오류. 로그인 해주세요.');
-                    window.location.href = '/main'; // 로그인 페이지로 리디렉션
+                    // window.location.href = '/main';는 로그아웃 콜백에 이미 리디렉션이 포함된 경우 생략
+                    if (!window.location.href.includes('/main')) {
+                        window.location.href = '/main';
+                    }
                 }
             }
         } else if (error.request) {

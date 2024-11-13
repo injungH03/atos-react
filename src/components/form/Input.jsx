@@ -1,6 +1,17 @@
 import React from 'react';
 
-const Input = ({ label, name, register, required, type = 'text', placeholder, errors, className, inputClassName, ...rest }) => {
+const Input = ({ 
+    label, 
+    name, 
+    register, 
+    required, 
+    type = 'text', 
+    placeholder, 
+    errors, 
+    className = '', 
+    inputClassName = '', 
+    ...rest 
+}) => {
     return (
         <div className={`input-group ${className}`}>
             {label && (
@@ -13,7 +24,7 @@ const Input = ({ label, name, register, required, type = 'text', placeholder, er
                 name={name}
                 type={type}
                 placeholder={placeholder}
-                {...register(name, { required })} 
+                {...register(name, required ? { required } : {})}
                 className={`input-field ${inputClassName} ${errors ? 'input-error' : ''}`}
                 {...rest}
             />

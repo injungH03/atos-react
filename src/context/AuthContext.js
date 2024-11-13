@@ -7,37 +7,49 @@ const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({
         isAuthenticated: false,
         role: null,
-        userId: null
+        userId: null,
+        name: null,
+        loginTime: null
     });
 
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const loadAuthState = () => {
-            const authStatus = localStorage.getItem('isAuthenticated') === 'true';
-            const role = localStorage.getItem('userRole');
-            const userId = localStorage.getItem('userId');
-            const token = localStorage.getItem('jwt');
-            
-            setAuth({
-                isAuthenticated: authStatus && !!token,
-                role: role,
-                userId: userId,
-            });
-            setIsLoading(false); 
-        };
+    const loadAuthState = () => {
+        const authStatus = localStorage.getItem('isAuthenticated') === 'true';
+        const role = localStorage.getItem('userRole');
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('jwt');
+        const name = localStorage.getItem('name');
+        const loginTime = localStorage.getItem('loginTime');
+        
+        setAuth({
+            isAuthenticated: authStatus && !!token,
+            role: role,
+            userId: userId,
+            name: name,
+            loginTime: loginTime
+        });
+        setIsLoading(false); 
+    };
 
+    useEffect(() => {
         loadAuthState();
     }, []);
 
-    const login = (role, userId) => {
-        localStorage.setItem('userRole', role);
-        localStorage.setItem('userId', userId);
+    const login = (loginInfo) => {
+        localStorage.setItem('userRole', loginInfo.role);
+        localStorage.setItem('userId', loginInfo.userId);
         localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('jwt', loginInfo.token);
+        localStorage.setItem('name', loginInfo.name);
+        localStorage.setItem('loginTime', loginInfo.loginTime);
+
         setAuth({
             isAuthenticated: true,
-            role: role,
-            userId: userId
+            role: loginInfo.role,
+            userId: loginInfo.userId,
+            name: loginInfo.name,
+            loginTime: loginInfo.loginTime
         });
     };
 
@@ -49,8 +61,11 @@ const AuthProvider = ({ children }) => {
         setAuth({
             isAuthenticated: false,
             role: null,
-            userId: null
+            userId: null,
+            name: null,
+            loginTime: null
         });
+        loadAuthState();
     };
 
     useEffect(() => {

@@ -91,19 +91,18 @@ function Header() {
           </nav>
           <div className="aside-wrap">
             <div className="language-wrap">
-              <ul>
+            <ul className={auth.isAuthenticated ? 'logged-in' : ''}>
                 {!auth.isAuthenticated ? (
-                  <>
-                    <li><Link to="/main">로그인</Link></li>
-                    <li><Link to="/signup">회원가입</Link></li>
-                  </>
+                    <>
+                        <li><Link to="/main">로그인</Link></li>
+                        <li><Link to="/signup">회원가입</Link></li>
+                    </>
                 ) : (
-                  <>
-                    <li><button onClick={handleLogout}>로그아웃</button></li>
-                    <li><Link to="/mypage">마이페이지</Link></li>
-                  </>
+                    <>
+                        <li><button onClick={handleLogout}>로그아웃</button></li>
+                    </>
                 )}
-              </ul>
+            </ul>
             </div>
           </div>
         </div>

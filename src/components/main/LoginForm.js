@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { post } from '@utils/axios_api';
 import { useNavigate } from 'react-router-dom';
 import { AuthHook } from '@hooks';
+import { Input } from '@components/form';
 
 // 유효성 검사 스키마
 const validationSchema = Yup.object().shape({
@@ -24,15 +25,14 @@ const LoginForm = () => {
 
     const onSubmit = async (data) => {
         setServerError('');
-        console.log('Submitted data:', data);
         try {
             const loginData = { username: data.id, password: data.password };
-            const response = await post('/login', loginData);
+            const loginInfo = await post('/login', loginData);
 
-            console.log('Response:', response);
+            // console.log('loginInfo:', loginInfo);
 
-            localStorage.setItem('jwt', response.token);
-            login(response.role, response.userId);
+            
+            login(loginInfo);
             navigate('/main'); 
             reset();
         } catch (err) {
@@ -51,25 +51,29 @@ const LoginForm = () => {
                         <div className="id_input_wrap">
                             <div>
                                 <p className="fz16 fw500">아이디</p>
-                                <input
+                                <Input
+                                    name="id"
                                     type="text"
-                                    {...register('id')}
-                                    className="c2 enterArea"
-                                    maxLength="30"
                                     placeholder="아이디를 입력해 주세요."
+                                    register={register}
+                                    required={true}
+                                    maxLength="30"
+                                    errors={errors.id}
+                                    inputClassName="c2 enterArea"
                                 />
-                                {errors.id && <span className="error-message">{errors.id.message}</span>}
                             </div>
                             <div>
                                 <p className="fz16 fw500">비밀번호</p>
-                                <input
+                                <Input
+                                    name="password"
                                     type="password"
-                                    {...register('password')}
-                                    maxLength="20"
-                                    className="c4 enterArea"
                                     placeholder="비밀번호를 입력해 주세요."
+                                    register={register}
+                                    required={true}
+                                    maxLength="20"
+                                    errors={errors.password}
+                                    inputClassName="c4 enterArea"
                                 />
-                                {errors.password && <span className="error-message">{errors.password.message}</span>}
                             </div>
                         </div>
                     </dd>

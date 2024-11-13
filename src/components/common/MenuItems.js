@@ -2,10 +2,10 @@ const menuItems = [
     {
         title: '안전보건교육소개',
         subItems: [
-            { title: '안전보건교육이란?', link: '/safety-education' },
-            { title: '관리감독자 정기교육', link: '/safety-education/management' },
-            { title: '근로자 정기교육', link: '/safety-education/worker' },
-            { title: '위험성평가 교육', link: '/safety-education/risk-assessment' },
+            { title: '안전보건교육이란?', link: '/safety' },
+            { title: '관리감독자 정기교육', link: '/safety/management' },
+            { title: '근로자 정기교육', link: '/safety/worker' },
+            { title: '위험성평가 교육', link: '/safety/risk' },
         ],
     },
     {
@@ -27,13 +27,13 @@ const menuItems = [
             { title: '1:1문의', link: '/support/ask', requiresLogin: true },
         ],
     },
-    {
-        title: '고객지원',
-        subItems: [
-            { title: '대리점 안내', link: '/support/dealers' },
-            { title: '문의하기', link: '/support/contact' },
-        ],
-    },
+    // {
+    //     title: '고객지원',
+    //     subItems: [
+    //         { title: '대리점 안내', link: '/support/dealers' },
+    //         { title: '문의하기', link: '/support/contact' },
+    //     ],
+    // },
     {
         title: '나의강의실',
         subItems: [

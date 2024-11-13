@@ -49,6 +49,15 @@ function AppRoutes() {
                 } 
             />
 
+            <Route path="/safety" 
+                element={
+                    <Layout>
+                        {/* <LectureList /> */}
+                    </Layout>
+                } 
+            />
+
+
             <Route path="/support/resources" 
                 element={
                     // <ProtectedRoute roles={['ROLE_ADMIN', 'ROLE_USER']}>

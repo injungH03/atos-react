@@ -1,6 +1,15 @@
 import React from 'react';
 import {Footer, HeaderNavi} from '@components';
 
+/** 
+ * URL 파라미터: 보안에 민감하지 않은 데이터 전달 시, RESTful 경로로 사용.
+예: /products/:productId, /categories/:categoryId
+쿼리 문자열: 선택적 필터나 정렬과 같은 데이터를 추가할 때.
+예: /search?query=react, /products?sort=price_asc
+상태(State): URL에 민감한 데이터가 노출되지 않도록 할 때.
+예: 로그인 사용자 정보, 결제 관련 정보, 세션 관련 데이터 등
+ * 
+*/
 
 
 const test = () => {

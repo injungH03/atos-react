@@ -23,15 +23,15 @@ const pathMappings = [
         subMenu: '',
     },
     {
-        path: /^\/safety-education/,
+        path: /^\/safety/,
         headerMenu: '안전보건교육소개',
         getSubMenu: (location) => {
-            const subPath = location.pathname.split('/safety-education/')[1];
+            const subPath = location.pathname.split('/safety/')[1];
             if (subPath) {
                 const subMenuMapping = {
                     management: '관리감독자 정기교육',
                     worker: '근로자 정기교육',
-                    'risk-assessment': '위험성평가 교육',
+                    risk: '위험성평가 교육',
                 };
                 return subMenuMapping[subPath] || '안전보건교육이란?';
             }
