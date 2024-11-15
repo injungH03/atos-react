@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { setLogoutCallback } from '../utils/axios_api';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
+import { setLogoutCallback, resetSessionExpired } from '../utils/axios_api';
 
 export const AuthContext = createContext();
 
@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const loadAuthState = () => {
+    const loadAuthState = useCallback(() => {
         const authStatus = localStorage.getItem('isAuthenticated') === 'true';
         const role = localStorage.getItem('userRole');
         const userId = localStorage.getItem('userId');
@@ -30,11 +30,11 @@ const AuthProvider = ({ children }) => {
             loginTime: loginTime
         });
         setIsLoading(false); 
-    };
+    }, []);
 
     useEffect(() => {
         loadAuthState();
-    }, []);
+    }, [loadAuthState]);
 
     const login = (loginInfo) => {
         localStorage.setItem('userRole', loginInfo.role);
@@ -53,11 +53,13 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const logout = () => {
+    const logout = useCallback(() => {
         localStorage.removeItem('userRole');
         localStorage.removeItem('userId');
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('jwt');
+        localStorage.removeItem('name');
+        localStorage.removeItem('loginTime');
         setAuth({
             isAuthenticated: false,
             role: null,
@@ -65,12 +67,13 @@ const AuthProvider = ({ children }) => {
             name: null,
             loginTime: null
         });
+        resetSessionExpired();
         loadAuthState();
-    };
+    }, [loadAuthState]);
 
     useEffect(() => {
         setLogoutCallback(logout); // Axios 인터셉터에 로그아웃 함수 전달
-    }, []);
+    }, [logout]);
 
     return (
         <AuthContext.Provider value={{ auth, login, logout, isLoading }}>

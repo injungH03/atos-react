@@ -395,6 +395,3 @@ input[type="text"]:disabled {
     line-height: 225px;
 }
 
-.logged-in>li:first-child::after {
-    display: none !important;
-}

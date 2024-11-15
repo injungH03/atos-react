@@ -32,6 +32,7 @@ const LectureDetail = () => {
 
     const handleLectureList = () => {
         navigate('/lecture');
+        window.scrollTo(0, 0);
     };
 
     const { data, isLoading, isError, error } = useQuery(

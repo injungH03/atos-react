@@ -14,10 +14,10 @@ const HeaderNavi = ({selectedCategory}) => {
     
               {headerMenu && <>{headerMenu}</>}
     
-              {headerMenu && subMenu && <> {'>'} {subMenu}</>}
+              {headerMenu && subMenu && <> {'|'} {subMenu}</>}
     
               {categoryToDisplay && (
-                <> {'>'} &nbsp;<span>{categoryToDisplay}</span> </>
+                <> {'|'} &nbsp;<span>{categoryToDisplay}</span> </>
               )}
             </div>
           </div>

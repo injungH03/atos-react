@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { post } from '@utils/axios_api';
 import { useNavigate } from 'react-router-dom';
 import { AuthHook } from '@hooks';
-import { Input } from '@components/form';
+import { Input, Checkbox } from '@components/form';
 
 // 유효성 검사 스키마
 const validationSchema = Yup.object().shape({
@@ -17,11 +17,25 @@ const LoginForm = () => {
     const {auth, login} = AuthHook();
     const navigate = useNavigate();
     const [serverError, setServerError] = useState('');
-
-    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm({
+    
+    const [isIdSaved, setIsIdSaved] = useState(localStorage.getItem('isIdSaved') === 'true'); // 아이디 저장 여부
+    const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: { id: '', password: '' },
     });
+
+    const handleIdSaveChange = (e) => {
+        setIsIdSaved(e.target.checked);
+        localStorage.setItem('isIdSaved', e.target.checked ? 'true' : 'false');
+    };
+
+    useEffect(() => {
+        if (isIdSaved) {
+            const savedUserId = localStorage.getItem('savedUserId');
+            if (savedUserId) setValue('id', savedUserId); // 저장된 아이디를 id 필드에 채움
+        }
+    }, [isIdSaved, setValue]);
+
 
     const onSubmit = async (data) => {
         setServerError('');
@@ -30,7 +44,12 @@ const LoginForm = () => {
             const loginInfo = await post('/login', loginData);
 
             // console.log('loginInfo:', loginInfo);
-
+            // if (isIdSaved) {
+            //     localStorage.setItem('savedUserId', data.id);
+            // } else {
+            //     localStorage.removeItem('savedUserId');
+            // }
+            isIdSaved ? localStorage.setItem('savedUserId', data.id) : localStorage.removeItem('savedUserId');
             
             login(loginInfo);
             navigate('/main'); 
@@ -79,10 +98,17 @@ const LoginForm = () => {
                     </dd>
                 </dl>
                 <div className="f_b">
-                    <div className="idSaveBox input_chk">
-                        <input type="checkbox" id="chk_id_cookie" />
-                        <label htmlFor="chk_id_cookie" className="input_chk_label fz13 fw500">아이디 저장</label>
-                    </div>
+                    <Checkbox
+                        label="아이디 저장"
+                        name="saveId"
+                        register={register}
+                        required={false}
+                        className="idSaveBox input_chk"
+                        checkboxClassName="checkbox"
+                        labelClassName="input_chk_label fz13 fw500" 
+                        onChange={handleIdSaveChange} 
+                        checked={isIdSaved}
+                    />
                     <p className="menuBox">
                         <a href="#" className="fz13 fw600">아이디 찾기 / 비밀번호 찾기</a>
                     </p>

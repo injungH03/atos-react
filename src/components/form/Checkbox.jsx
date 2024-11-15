@@ -1,41 +1,32 @@
 import React from 'react';
 
-const Checkbox = ({ label, name, register, required, errors, ...rest }) => {
+const Checkbox = ({
+    label,
+    name,
+    register,
+    required = false,
+    errors,
+    className = '', 
+    checkboxClassName = '', 
+    labelClassName = '', 
+    ...rest
+}) => {
     return (
-        <div style={styles.checkboxGroup}>
-            <label style={styles.checkboxLabel}>
+        <div className={`checkbox-group ${className}`}>
+            <label htmlFor={name} className={`checkbox-label ${labelClassName}`}>
                 <input
+                    id={name}
+                    name={name}
                     type="checkbox"
-                    {...register(name, { required })}
-                    style={styles.checkbox}
+                    {...register(name, required ? { required } : {})}
+                    className={`checkbox ${checkboxClassName} ${errors ? 'checkbox-error' : ''}`}
                     {...rest}
                 />
                 {label}
             </label>
-            {errors && <span style={styles.error}>{errors.message}</span>}
+            {errors && <span className="error-text">{errors.message}</span>}
         </div>
     );
-};
-
-const styles = {
-    checkboxGroup: {
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: '15px',
-    },
-    checkboxLabel: {
-        display: 'flex',
-        alignItems: 'center',
-        fontWeight: 'bold',
-    },
-    checkbox: {
-        marginRight: '5px',
-    },
-    error: {
-        color: 'red',
-        fontSize: '12px',
-        marginLeft: '10px',
-    },
 };
 
 export default Checkbox;

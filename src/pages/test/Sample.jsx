@@ -12,7 +12,7 @@ import {Footer, HeaderNavi} from '@components';
 */
 
 
-const test = () => {
+const Sample = () => {
 
   return (
     <main id="main" className="mainpage">
@@ -46,4 +46,4 @@ const test = () => {
 };
 
 
-export default test;
+export default Sample;
