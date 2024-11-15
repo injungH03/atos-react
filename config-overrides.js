@@ -16,7 +16,7 @@ module.exports = function override(config) {
   // 경고 무시 설정 추가
   config.ignoreWarnings = [
     {
-      module: /@fullpage\/react-fullpage/, // 해당 모듈의 경고 무시
+      module: /@fullpage\/react-fullpage/, // 해당 모듈의 경고 무시 asdas
       message: /Failed to parse source map/, // source map 파싱 실패 경고 무시
     },
   ];
